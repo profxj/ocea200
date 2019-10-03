@@ -160,7 +160,7 @@ Arctic & 15,558,000 & 4.3 \\
 Taken from \url{https://en.wikipedia.org/wiki/Ocean#Oceanic_divisions}
 
 
-\item Drawing
+\item Drawing -- Am taking a zero on this one.
 
 \item Depth of shelfbreak -- "about 130m" from Talley Ch. 2;  \\
 Top of a mid-ocean ridge -- $\approx 4500$m;  Figure 2.5b of Talley
@@ -170,8 +170,55 @@ The Weddell Sea is also in the Southern Ocean, south of the Atlantic (Figure 2.9
 The Ninety-East ridge is in the Indian Ocean and runs roughly along the 90$^\circ$E meridian
 (Figure 2.10; Talley)
 
+\end{enumerate}
+
+\item Scalars and Vectors
+
+\begin{enumerate}
+  \item Temperature
+  \begin{enumerate}
+    \item $T$ is a function of time $t$, i.e. $T(t)$
+    \item Each $T$ measurement is a scalar.  
+    \item $T$ is now a function of time and position.  It is a vector $\bar T(t, \bar r)$
+  \end{enumerate}
+
+  \item Heading $\theta = 120^\circ$ at $v = 5$\,knots.
+  \begin{enumerate}
+    \item $v_E = v \, \cos(90-\theta) = 8.02 \, \rm km/hr = 2.22 \, \rm m/s$
+    \item $v_N = v \, \sin(90-\theta) = -4.63 \, \rm km/hr = -1.29 \, \rm m/s$
+  \end{enumerate}
+
+  \item 14 knots E, 9 knots S
+  \begin{enumerate}
+    \item $v = \sqrt{v_E^2 + v_S^2} = 8.67 \, \rm m/s$
+    \item $\theta = \tan^{-1}(v_E/(-v_S)) = 122.73^\circ$
+  \end{enumerate}
+
+  \item Heading to Hawaii
+  \begin{enumerate}
+    \item $\theta = \tan^{-1}(\delta_E/\delta_N) = 123.7^\circ$
+  \end{enumerate}
+
+  \item Dot product
+  \begin{enumerate}
+    \item $\bar v_1 = (10., 0.) \, {\rm m/s}; \bar v_2 = (0., 50.) \, {\rm m/s}$.  \\
+    The dot product is $\bar v_1 \cdot \bar v_2 = 10*0. + 0.*50. = 0 \, \rm m^2/s^2$
+    \item The dot product will be maximal when $\bar v_2 \parallel \bar v_1$, i.e. rotate it $-90^\circ$
+    in the standard $x,y$ convention.  Then $\bar v_1 \cdot \bar v_2 = 500 \, \rm m^2/s^2$
+  \end{enumerate}
+
+  \item Cross product
+  \begin{enumerate}
+    \item I presume we are now in an $x-y-z$ cartesian system.
+    \item $\bar v_1 = (10., 0., 0.) \, {\rm m/s}; \; \bar v_2 = (0., 50., 0.) \, {\rm m/s}$.  \\
+    The cross product is $\bar v_1 \times \bar v_2 = (10.*50. - 0.*0.) \, \hat z + 0. \, \hat y 
+    + 0. \hat x = 500 \, {\rm m^2/s^2} \, \hat z$ 
+    \item This is already maximal as the cross-product is maximum because $\bar v_1 \perp \bar v_2$
+  \end{enumerate}
 
 \end{enumerate}
+
+
 \end{enumerate}
 
 %\include{NSFsumm}
