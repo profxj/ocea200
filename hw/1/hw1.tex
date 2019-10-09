@@ -1,0 +1,245 @@
+%%%%%%%%% MASTER -- compiles the 4 sections
+\documentclass[11pt,letterpaper]{article}
+\usepackage[compact]{titlesec} 
+\usepackage{wrapfig}
+
+%\usepackage[]{savetrees} 
+%\pagestyle{myheadings}        
+%\markright{Joseph F. Hennawi}
+%\markboth{Joseph F. Hennawi}{Joseph F. Hennawi \hspace*{8cm}Research Plan\
+% \ \ }
+
+
+%\parindent=0.0in
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%% EXACT 1in MARGINS %%%%%%%                                   %%
+%\setlength{\hoffset}{0.13in}     %%                                   %%
+%\setlength{\voffset}{0.2in}     %%                                   %%
+%\setlength{\textwidth}{6.4in}     %%                                   %%
+%\setlength{\oddsidemargin}{0in}   %% (It is recommended that you       %%
+%\setlength{\evensidemargin}{0in}  %%  not change these parameters,     %%
+%\setlength{\textheight}{8.95in}    %%  at the risk of having your       %%
+%%\setlength{\textheight}{8.5in}    %%  at the risk of having your       %%
+%%\setlength{\topmargin}{0in}   %%  proposal dismissed on the basis  %%
+%\setlength{\topmargin}{-0.3in}   %%  proposal dismissed on the basis  %%
+%\setlength{\headheight}{0in}      %%  of incorrect formatting!!!)      %%
+%\setlength{\headsep}{0.5in}         %%                                   %%
+%\setlength{\footskip}{0.5in}       %%                                   %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                                   %%
+%\newcommand{\required}[1]{\section*{\hfil #1\hfil}}                    %%
+%\renewcommand{\refname}{\hfil References Cited\hfil}                   %%
+%\bibliographystyle{plain}                                              %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\addtolength{\parskip}{1.7mm} 
+
+%PUT YOUR MACROS HERE
+%\def \kms            {~{\rm km~s}^{-1}}
+%\def \hkpc      {h^{-1}{\rm\ kpc}}
+%\def \kpc      {\rm\ kpc}
+%\def \arcmin     { ^{\prime} }
+%\def \arcsec    {^{\prime\prime}}
+%\def\cm#1{\, {\rm cm^{#1}}}
+%\newcommand{\mnhi}{N_{\rm HI}}
+%\usepackage{setspace}
+
+%\usepackage[normalmargins,normalleading,normalfloats]{savetrees} 
+%\input defs.tex
+%\linespread{0.9}
+
+\usepackage{latexsym}
+\usepackage{fancybox}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{color}
+%\usepackage{ulem}
+\usepackage{float}
+\usepackage{url}
+ 
+
+\usepackage{amsmath}
+\usepackage{epsfig,sidecap,natbib}
+\newcommand{\apj}{ApJ}%                                         % Journal abbreviations
+\newcommand{\apjs}{ApJS}
+\newcommand{\apjl}{ApJL}
+\newcommand{\aap}{A{\&}A}
+\newcommand{\aaps}{A{\&}AS}
+\newcommand{\mnras}{MNRAS}
+\newcommand{\aj}{AJ}
+\newcommand{\araa}{ARAA}
+\newcommand{\pasp}{PASP}
+\newcommand{\nat}{Nature}
+\newcommand{\jcap}{JCAP}
+\newcommand{\procspie}{SPIE}
+
+\newcommand{\npair}{200+}
+\newcommand{\nnir}{100}
+\newcommand{\ntpe}{2000}
+\newcommand{\nheii}{18}
+%\newcommand{\mhmpc}{h^{-1} \, \rm Mpc}
+%\newcommand{\hmpc}{$\mhmpc$}
+\def \cgssb {{\rm\,erg\,s^{-1}\,cm^{-2}\,arcsec^{-2}}}
+\def \mwlya {W_{\rm Ly\alpha}}
+\newcommand{\mtheii}{\tau_{\rm HeII}^{\rm eff}}
+\newcommand{\theii}{$\mtheii$}
+\newcommand{\mrphys}{R_\perp}
+\newcommand{\rphys}{$\mrphys$}
+\def\ion#1#2{#1\,{\sc #2}}
+\newcommand{\jjackpot}{SDSSJ0841+3921}
+
+
+\pretolerance=10000
+\textwidth=6.4in
+\textheight=8.95in
+\voffset = 0.in
+%\voffset = -0.3in  % For my printer
+\topmargin=0.0in
+\headheight=0.00in
+\hoffset = 0.0in
+%\hoffset = 0.33in  %  For my printer
+\headsep=0.00in
+\oddsidemargin=0in
+\evensidemargin=0in
+\parindent=2em
+\parskip=0.2ex
+ 
+\renewcommand{\baselinestretch}{1.03}
+
+\special{papersize=8.5in,11in}
+
+%\addtolength{\parskip}{1.7mm} 
+
+%PUT YOUR MACROS HERE
+%\def \kms            {~{\rm km~s}^{-1}}
+%\def \hMpc      {h^{-1}{\rm\ Mpc}}
+\def \hkpc      {h^{-1}{\rm\ kpc}}
+\def \kpc      {\rm\ kpc}
+\def \arcmin     { ^{\prime} }
+%\def \arcsec    {^{\prime\prime}}
+%\def\cm#1{\, {\rm cm^{#1}}}
+%\newcommand{\mnhi}{N_{\rm HI}}
+%\usepackage{setspace}
+
+%\usepackage[normalmargins,normalleading,normalfloats]{savetrees} 
+\input ../../defs.tex
+%\linespread{0.9}
+
+
+\begin{document}
+
+\title{Homework 1}
+
+\maketitle
+
+\begin{center}
+J. Xavier Prochaska
+\end{center}
+
+\begin{enumerate}
+\item Read -- Done
+
+\item Ocean Basins
+
+\begin{enumerate}
+
+\item Table
+
+\begin{table}[ht]
+\caption{Ocean Basin Data}
+\label{tab:dla}
+\begin{center}
+\begin{tabular}{cccc}
+\hline
+Ocean & Area (km$^2$) & Percentile \\
+\hline
+Pacific & 168,723,000 & 46.6 \\
+Atlantic & 85,133,000 & 23.5 \\
+Indian & 70,560,000 & 19.5 \\
+Southern & 21,960,000 & 6.1 \\
+Arctic & 15,558,000 & 4.3 \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+Taken from \url{https://en.wikipedia.org/wiki/Ocean#Oceanic_divisions}
+
+
+\item Drawing -- Am taking a zero on this one.
+
+\item Depth of shelfbreak -- "about 130m" from Talley Ch. 2;  \\
+Top of a mid-ocean ridge -- $\approx 4500$m;  Figure 2.5b of Talley
+
+\item The Ross Sea is in the Southern Ocean, south of the Pacific (Figure 2.8; Talley) \\
+The Weddell Sea is also in the Southern Ocean, south of the Atlantic (Figure 2.9; Talley)
+The Ninety-East ridge is in the Indian Ocean and runs roughly along the 90$^\circ$E meridian
+(Figure 2.10; Talley)
+
+\end{enumerate}
+
+\item Scalars and Vectors
+
+\begin{enumerate}
+  \item Temperature
+  \begin{enumerate}
+    \item $T$ is a function of time $t$, i.e. $T(t)$
+    \item Each $T$ measurement is a scalar.  
+    \item $T$ is now a function of time and position.  It is a vector $\bar T(t, \bar r)$
+  \end{enumerate}
+
+  \item Heading $\theta = 120^\circ$ at $v = 5$\,knots.
+  \begin{enumerate}
+    \item $v_E = v \, \cos(90-\theta) = 8.02 \, \rm km/hr = 2.22 \, \rm m/s$
+    \item $v_N = v \, \sin(90-\theta) = -4.63 \, \rm km/hr = -1.29 \, \rm m/s$
+  \end{enumerate}
+
+  \item 14 knots E, 9 knots S
+  \begin{enumerate}
+    \item $v = \sqrt{v_E^2 + v_S^2} = 8.67 \, \rm m/s$
+    \item $\theta = \tan^{-1}(v_E/(-v_S)) = 122.73^\circ$
+  \end{enumerate}
+
+  \item Heading to Hawaii
+  \begin{enumerate}
+    \item $\theta = \tan^{-1}(\delta_E/\delta_N) = 123.7^\circ$
+  \end{enumerate}
+
+  \item Dot product
+  \begin{enumerate}
+    \item $\bar v_1 = (10., 0.) \, {\rm m/s}; \bar v_2 = (0., 50.) \, {\rm m/s}$.  \\
+    The dot product is $\bar v_1 \cdot \bar v_2 = 10*0. + 0.*50. = 0 \, \rm m^2/s^2$
+    \item The dot product will be maximal when $\bar v_2 \parallel \bar v_1$, i.e. rotate it $-90^\circ$
+    in the standard $x,y$ convention.  Then $\bar v_1 \cdot \bar v_2 = 500 \, \rm m^2/s^2$
+  \end{enumerate}
+
+  \item Cross product
+  \begin{enumerate}
+    \item I presume we are now in an $x-y-z$ cartesian system.
+    \item $\bar v_1 = (10., 0., 0.) \, {\rm m/s}; \; \bar v_2 = (0., 50., 0.) \, {\rm m/s}$.  \\
+    The cross product is $\bar v_1 \times \bar v_2 = (10.*50. - 0.*0.) \, \hat z + 0. \, \hat y 
+    + 0. \hat x = 500 \, {\rm m^2/s^2} \, \hat z$ 
+    \item This is already maximal as the cross-product is maximum because $\bar v_1 \perp \bar v_2$
+  \end{enumerate}
+
+\end{enumerate}
+
+
+\end{enumerate}
+
+%\include{NSFsumm}
+%\setcounter{page}{1}
+%\setcounter{page}{1}
+%\include{NSFrefs}
+%\setcounter{page}{1}
+%\include{NSFbio}
+%\required{Project Description}
+
+
+%\begin{center}
+%  \begin{large}
+%    {\bf Quasars Probing Quasars}
+%  \end{large}
+%\end{center}
+
+
+
+\end{document}
