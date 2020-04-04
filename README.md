@@ -1,2 +1,3 @@
-# ocea200
-Ocean Sciences 200 by JXP
+# Ocean Science Classes
+
+by JXP
