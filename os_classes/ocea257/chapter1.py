@@ -95,3 +95,44 @@ def sinh_fourth(x, kdx,k=1.):
     dfdx_fourth = (4./3) * (sinh_pos-sinh_neg)/2/dx - (1/3)*(sinh_pos2-sinh_neg2)/4/dx
     return dfdx_fourth
 
+'''
+Problem 1.8
+'''
+
+def sin_func(omega, t, A=1., sigma=1e-5):
+    # Noise
+    noise = 2*np.random.random(np.atleast_1d(t).size) - 1
+    Ap = A * (1 + noise * sigma)
+    if not isinstance(t, np.ndarray):
+        Ap = Ap[0]
+    return Ap*np.sin(omega*t)
+
+def sin_first_forward(t, omegadt, omega=1., sigma=1e-5):
+    dt = omegadt / omega
+    # Evaluate
+    tdt = t + dt
+    f = sin_func(omega, t, sigma=sigma)
+    f_plus = sin_func(omega, tdt, sigma=sigma)
+    # Finite difference, forward
+    dfdt_forward = (f_plus-f)/dt
+    return dfdt_forward
+
+def sin_first_backward(t, omegadt,omega=1., sigma=1e-5):
+    dt = omegadt / omega
+    # Evaluate
+    tdt = t - dt
+    f = sin_func(omega, t, sigma=sigma)
+    f_neg = sin_func(omega, tdt, sigma=sigma)
+    # Finite difference, forward
+    dfdt_back = (f-f_neg)/dt
+    return dfdt_back
+
+def sin_second_center(t, omegadt,omega=1., sigma=1e-5):
+    dt = omegadt / omega
+    tdtp = t + dt
+    tdtn = t - dt
+    f_neg = sin_func(omega, tdtn, sigma=sigma)
+    f_pos = sin_func(omega, tdtp, sigma=sigma)
+    dfdt_second = (f_pos-f_neg)/dt/2
+    return dfdt_second
+
