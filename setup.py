@@ -22,12 +22,12 @@ setup_keywords = dict()
 #
 # THESE SETTINGS NEED TO BE CHANGED FOR EVERY PRODUCT.
 #
-setup_keywords['name'] = 'Ocea200'
-setup_keywords['description'] = 'Work related to Ocea 200'
+setup_keywords['name'] = 'OS Classes'
+setup_keywords['description'] = 'Work related to Ocean Science classes'
 setup_keywords['author'] = 'JXP'
 setup_keywords['author_email'] = 'xavier@ucolick.org'
 setup_keywords['license'] = 'BSD'
-setup_keywords['url'] = 'https://github.com/profxj/ocea200'
+setup_keywords['url'] = 'https://github.com/profxj/os_classes'
 
 #
 # END OF SETTINGS THAT NEED TO BE CHANGED.
@@ -72,7 +72,7 @@ setup_keywords['tests_require']=['pytest']
 data_files = []
 
 # walk through the data directory, adding all files
-data_generator = os.walk('ocea200/data')
+data_generator = os.walk('os_classes/data')
 for path, directories, files in data_generator:
     for f in files:
         data_path = '/'.join(path.split('/')[1:])
