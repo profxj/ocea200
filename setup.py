@@ -22,7 +22,7 @@ setup_keywords = dict()
 #
 # THESE SETTINGS NEED TO BE CHANGED FOR EVERY PRODUCT.
 #
-setup_keywords['name'] = 'OS Classes'
+setup_keywords['name'] = 'OS_Classes'
 setup_keywords['description'] = 'Work related to Ocean Science classes'
 setup_keywords['author'] = 'JXP'
 setup_keywords['author_email'] = 'xavier@ucolick.org'
@@ -72,6 +72,7 @@ setup_keywords['tests_require']=['pytest']
 data_files = []
 
 # walk through the data directory, adding all files
+'''
 data_generator = os.walk('os_classes/data')
 for path, directories, files in data_generator:
     for f in files:
@@ -80,6 +81,7 @@ for path, directories, files in data_generator:
 setup_keywords['package_data'] = {'frb': data_files,
                                   '': ['*.rst', '*.txt', '*.yaml']}
 setup_keywords['include_package_data'] = True
+'''
 
 #
 # Run setup command.
