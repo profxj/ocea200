@@ -1,4 +1,4 @@
-10                             TSTOP (years)
+50                             TSTOP (years)
 1                              IPLTM (years)
-1e5                            A_H m*m/s
+2e5                            A_H m*m/s
 0                              IFNONL (Do not change this parameter)
