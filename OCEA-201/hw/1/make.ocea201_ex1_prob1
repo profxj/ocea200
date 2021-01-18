@@ -1,0 +1,109 @@
+#
+#
+#  Skeleton for all the makefiles.
+#
+
+#
+#  Make our own suffixes' list.
+#
+.SUFFIXES:
+.SUFFIXES:	.f	.o
+.SUFFIXES:	.F	.f
+
+#
+#  Default command.
+#
+.DEFAULT:
+	@$(ECHO) "Unknown target $@, try:  make help"
+
+#
+#  Command to build .o files from .f files.
+#
+.f.o:
+	@$(ECHO) Making $@ from $<
+	@$(FC) -c $(FFLAGS) $<
+
+.F.f:
+	@$(ECHO) Making $*.f from $<
+	@$(CPP) -P -DSINGLE $(CPPFLAGS) $< $*.f
+	@$(ECHO) Making d$*.f from $<
+	@$(CPP) -P -DDOUBLE $(CPPFLAGS) $< d$*.f
+
+#
+#  Various compilation programs and flags.
+#  You need to make sure these are correct for your system.
+#
+CD	 = cd
+
+CHMOD	 = chmod
+CHFLAGS	 = -f
+
+COMPRESS = compress
+
+CP	 = cp
+
+#  To find the path for cpp, try `man cpp', and it should list the path
+#  at the top, under `Syntax'.  It is usually in /lib.
+CPP	 = /lib/cpp
+CPPFLAGS =
+
+ECHO	 = echo
+
+#  You also need to adjust the path to your FORTRAN compiler.
+#
+#  Set your own FORTRAN 77 compiler flags here
+#
+FC	 = gfortran
+FFLAGS	 = 
+# FFLAGS	 = -fast -O4
+
+LDFLAGS	 =
+
+LN	 = ln
+LNFLAGS	 = -s
+
+MAKE	 = /bin/make
+
+MKDIR	 = mkdir
+MDFLAGS	 = -p
+
+MV	 = mv
+MVFLAGS	 = -f
+
+RM	 = rm
+RMFLAGS  = -f
+
+SHELL	 = /bin/sh
+
+TAR	 = tar
+
+#  For System V based machine without ranlib, like Cray and SGI, 
+#  use touch instead.
+# RANLIB   = touch
+RANLIB   = ranlib
+
+#
+#  This is the general help target.
+#
+help:
+	@$(ECHO) "usage: make ?"
+#
+# makefile to run a simple example of the reverse communication
+# protocol.
+#
+# Modify if ARPACK library was built somewhere else.
+# We assume that the required BLAS and LAPACK routines
+# are in the version of libarpack.a built. If not, you
+# will need to modify the link step below and link to them.
+#
+
+SRCS= ocea201_ex1_prob1.f graphics.f
+
+
+OBJS= ocea201_ex1_prob1.o graphics.o
+
+prob1: $(OBJS)
+	$(FC) $(FFLAGS) $(OBJS) -o prob1.x
+
+
+#
