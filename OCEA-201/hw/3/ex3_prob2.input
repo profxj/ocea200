@@ -1,5 +1,5 @@
-??                             TSTOP (years)
-??                             IPLTM (years)
-??                             W_0   m/s
-??                             A_H m*m/s
-??                              A_2
+80                             TSTOP (years)
+2                              IPLTM (years)
+1e-6                           W_0   m/s
+1e4                            A_H m*m/s
+1.9e-7                         A_2
