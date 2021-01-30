@@ -19,6 +19,7 @@ W0 = 1.e-7
 
 def run_midocn(W0=1e-7, ncell=201):
     """
+    Run the script
 
     Parameters
     ----------
