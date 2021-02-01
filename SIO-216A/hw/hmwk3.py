@@ -170,7 +170,7 @@ def step_to_nest(rstate, ants, nest, p_nest, random_step=0.1):
 def run_forward(rstate, nsteps, ants, food, nest, p_food, p_nest,
                 random_step=0.1):
     """
-    
+
     Parameters
     ----------
     rstate
