@@ -169,6 +169,23 @@ def step_to_nest(rstate, ants, nest, p_nest, random_step=0.1):
 
 def run_forward(rstate, nsteps, ants, food, nest, p_food, p_nest,
                 random_step=0.1):
+    """
+    
+    Parameters
+    ----------
+    rstate
+    nsteps
+    ants
+    food
+    nest
+    p_food
+    p_nest
+    random_step
+
+    Returns
+    -------
+
+    """
     for ii in range(nsteps):
         # Take steps to food
         step_to_food(rstate, ants, food, p_food, random_step=random_step)
