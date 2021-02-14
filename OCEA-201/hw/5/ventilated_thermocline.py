@@ -2,6 +2,8 @@
 
 import numpy as np
 
+from IPython import embed
+
 #%
 #% This script plots the solution for the 2-layer solution of the
 #% ventilated thermocline equation of LPS. The script follows
@@ -10,40 +12,39 @@ import numpy as np
 #% The x-coordinate is longitude in radians, and the y-coordinate
 #% is f/f0, starting at the equator.
 #%
-#% Specify the layer densities of the active upper two layers (kg/(m*m*m)).
-rho1=1#????;
-rho2=1#????;
 #%
-#% Northern most extent of the model domain (degrees).
 #%
-theta0=45#??;
 #%
-#% Latitude of the outcrop line for layer 2 (degrees).
 #%
-theta2=45#??;
 #%
-#% Width of the domain (m).
 #%
-Lx=1000#???????;
-#%
-#% Amplitude of the Ekman pumping velocity (m/s).
-#%
-W0=0.1#????;
-#%
-#% Depth of layer 2 along the eastern boundary (m).
-#%
-H2=100#???;
-#%
-#% NOTE:
-#% Define max plotting depth (m). This parameter controls the maximum value
-#% plotted on the depth axis. You may need to adjust this if in some of your
-#% calculations your layer depths exceed the value of -1200m prescribed here.
-#%
-max_depth=-1200
 #%
 #%%%%%%%%%%%%%%% DO NOT EDIT THE FILE BELOW HERE %%%%%%%%
 #%
-def two_layers():
+def two_layers(theta0=60.,theta2=50., rho1=1025.50,rho2=1026.75,
+               Lx=5000., W0=2e-6, H2=400, max_depth=-1200):
+    """[summary]
+
+    Args:
+        theta0 ([type], optional): [description]. Defaults to 60..
+        theta2 ([type], optional): [description]. Defaults to 50..
+        rho1 (float, optional): [description]. Defaults to 1025.50.
+        rho2 (float, optional): [description]. Defaults to 1026.75.
+        Lx ([type], optional): [description]. Defaults to 5000..
+        W0 ([type], optional): [description]. Defaults to 2e-6.
+        H2 (int, optional): [description]. Defaults to 400.
+        max_depth (int, optional): [description]. Defaults to -1200.
+    #% Specify the layer densities of the active upper two layers (kg/(m*m*m)).
+    #% Northern most extent of the model domain (degrees).
+    #% Latitude of the outcrop line for layer 2 (degrees).
+    #% Width of the domain (m).
+    #% Amplitude of the Ekman pumping velocity (m/s).
+    #% Depth of layer 2 along the eastern boundary (m).
+    #% NOTE:
+    #% Define max plotting depth (m). This parameter controls the maximum value
+    #% plotted on the depth axis. You may need to adjust this if in some of your
+    #% calculations your layer depths exceed the value of -1200m prescribed here.
+    """
     g=9.81
     rho3=1027.50
     #%
@@ -65,8 +66,8 @@ def two_layers():
 
     # Angular rotation rate of earth.
     Omega=7.292e-5
-    theta0=theta0*2*pi/360
-    theta2=theta2*2*pi/360
+    theta0=theta0*2*np.pi/360
+    theta2=theta2*2*np.pi/360
     f0=2*Omega*np.sin(theta0)
     f2=2*Omega*np.sin(theta2)
     # Latitude grid-spacing.
@@ -96,7 +97,7 @@ def two_layers():
     #
     we=np.zeros((im,jm))
     for j in range(jm): #1:jm
-        we[:,j]=-W0*f0*f0*np.sin(np.pi*f[j]/f0)/(f[j]*f[j]);
+        we[:,j]=-W0*f0*f0*np.sin(np.pi*f[j]/f0)/(f[j]*f[j])
     #
     # D0^2 from Pedlosky eqn 4.4.26 but NOT using the H2 scaling,
     # but instead using the actual factor from 4.4.5 so that H2,
@@ -109,7 +110,7 @@ def two_layers():
     for j in range(jm): #1:jm
         for i in range(im): #=1:im
             phi=i*dphi
-            D02[i,j]=D0fact*(1-phi/phie)*np.sin(pi*f[j]/f0)
+            D02[i,j]=D0fact*(1-phi/phie)*np.sin(np.pi*f[j]/f0)
     #
     # Single layer region f0 <= f <= f2, Pedlosky eqn 4.4.6.
     #
@@ -127,12 +128,10 @@ def two_layers():
     #    for i=1:im
     #    h(i,j)=sqrt((D02(i,j)+H2*H2)/(1+gamma1*(1-f(j)/f2)^2/gamma2));
     #    end
-    
     gdf = f <= f2
     for i in range(im): #=1:im
         h[i,gdf]=np.sqrt((D02[i,gdf]+H2*H2)/(
             1+gamma1*(1-f[gdf]/f2)**2/gamma2))
-
     #
     # Pedlosky eqn 4.4.14a,b.
     #
@@ -158,7 +157,7 @@ def two_layers():
     fac=1/(D0fact*np.sin(np.pi*f[j]/f0))
     phi_shadow=phie*(1-fac*gamma1*(1-f[j]/f2)**2*H2*H2/gamma2)
     shadx[j]=phi_shadow*eradius/1000
-    phi=np.arange(im)*dphi
+    phi=np.arange(im)[gdf]*dphi
     gdphi = phi >= phi_shadow
     for j in np.where(gdf)[0]:
         for i in np.where(gdphi)[0]:
@@ -178,18 +177,17 @@ def two_layers():
     # where fac=1/(D0fact*sin(pi*f/f0)), and D02w is the value of D02 evaluated
     # at (0,theta2)..
     #
-    poolx=zeros(jm,1);
-    D02w=D0fact*np.sin(pi*f2/f0)
+    D02w=D0fact*np.sin(np.pi*f2/f0)
     Gamma12=gamma1/gamma2
     hw=np.sqrt(D02w+H2*H2)
     pooly=np.arange(jm)*dtheta*eradius/1000
 
     # Tricky one!
-    fac=1/(D0fact*np.sin(pi*f[gdf]/f0))
-    fac1=Gamma12*(1-f[gdf]/f2)^2
+    fac=1/(D0fact*np.sin(np.pi*f[gdf]/f0))
+    fac1=Gamma12*(1-f[gdf]/f2)**2
     phi_pool=phie*(1-fac*(D02w*(1+fac1)+H2*H2*fac1))
     poolx= np.maximum(phi_pool*eradius/1000, 0.)
-    phi= np.arange(im)*dphi
+    phi= np.arange(im)[gdf]*dphi
     gdphi = phi <= phi_pool
     for j in np.where(gdf)[0]:
         for i in np.where(gdphi)[0]:
@@ -217,109 +215,11 @@ def two_layers():
 
     # For plotting
     outy=np.ones(jm)*theta2*eradius/1000
-    outx=(np.arange(im)*dphi*eradius/1000
+    outx=np.arange(im)*dphi*eradius/1000
 
-    '''
-    figure(1)
-    subplot(3,2,1)
-    contour(xarr,yarr,psi2); colorbar
-    hold on
-    plot(shadx,shady,'k--')
-    plot(outx,outy,'k--')
-    plot(poolx,pooly,'k--')
-    xlabel('x (km)')
-    ylabel('y (km)')
-    title('a: Layer 2 stream function')
-    jlab=50;
-    %text(jlab*dphi*eradius/1000,0.7*shady(jlab),'Shadow Zone')
+    return xarr, yarr, psi2
 
-    subplot(3,2,3)
-    contour(xarr,yarr,psi1); colorbar
-    hold on
-    plot(shadx,shady,'k--')
-    plot(outx,outy,'k--')
-    plot(poolx,pooly,'k--')
-    xlabel('x (km)')
-    ylabel('y (km)')
-    title('b: Layer 1 stream function')
-
-    subplot(3,2,2)
-    pcolor(xarr,yarr,psi2); shading interp; colorbar
-    hold on
-    plot(shadx,shady,'w--')
-    plot(outx,outy,'w--')
-    plot(poolx,pooly,'w--')
-    xlabel('x (km)')
-    ylabel('y (km)')
-    title('c: Layer 2 stream function')
-    %text(jlab*dphi*eradius/1000,0.7*shady(jlab),'Shadow Zone')
-
-    subplot(3,2,4)
-    pcolor(xarr,yarr,psi1); shading interp; colorbar
-    hold on
-    plot(shadx,shady,'w--')
-    plot(outx,outy,'w--')
-    plot(poolx,pooly,'w--')
-    xlabel('x (km)')
-    ylabel('y (km)')
-    title('d: Layer 1 stream function')
-
-    ixt=int32(xtrans/dx)+1;
-    iyt=int32((ytrans*2*pi/360)/dtheta)+1;
-    subplot(3,2,5)
-    plot(yarr(ixt,:),-h(ixt,:),'b')
-    hold on
-    plot(yarr(ixt,:),-hp1(ixt,:),'r')
-    axis([0 yarr(ixt,end) max_depth 0]);
-    xlabel('y (km)')
-    ylabel('depth (m)')
-    title('e: N-S cross-section')
-    legend('z_3=h_1+h_2','z_2=h_1')
-
-    subplot(3,2,6)
-    plot(xarr(:,iyt),-h(:,iyt),'b')
-    hold on
-    plot(xarr(:,iyt),-hp1(:,iyt),'r')
-    axis([0 xarr(end,iyt) max_depth 0]);
-    xlabel('y (km)')
-    ylabel('depth (m)')
-    title('f: E-W cross-section')
-    %legend('z_3=h_1+h_2','z_2=h_1','Location','SouthOutside')
-
-    print -djpeg -r300 ventilated_2l_fig1_ns.jpg
-
-    figure(2)
-
-    subplot(3,2,1)
-    mesh(xarr,yarr,-h); colorbar
-    caxis([-1200 0]);
-    axis([0 xarr(end,iyt) 0 yarr(ixt,end) max_depth 0]);
-    xlabel('x (km)')
-    ylabel('y (km)')
-    zlabel('depth (m)')
-    title('z_3 surface')
-
-
-    subplot(3,2,3)
-    mesh(xarr,yarr,-hp1); colorbar
-    caxis([-1200 0]);
-    axis([0 xarr(end,iyt) 0 yarr(ixt,end) max_depth 0]);
-    xlabel('x (km)')
-    ylabel('y (km)')
-    zlabel('depth (m)')
-    title('z_2 surface')
-
-    subplot(3,2,5)
-    mesh(xarr,yarr,-h); colorbar
-    caxis([-1200 0]);
-    hold on
-    mesh(xarr,yarr,-hp1); colorbar
-    axis([0 xarr(end,iyt) 0 yarr(ixt,end) max_depth 0]);
-    xlabel('x (km)')
-    ylabel('y (km)')
-    zlabel('depth (m)')
-    title('z_2 and z_3 surfaces')
-
-    print -djpeg -r300 ventilated_2l_fig2_ns.jpg
-    '''
-
+# Command line execution
+if __name__ == '__main__':
+    two_layers()
+    embed(header='225')
