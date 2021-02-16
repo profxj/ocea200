@@ -129,16 +129,18 @@ def two_layers(theta0=60.,theta2=50., rho1=1025.50,rho2=1026.75,
     #    h(i,j)=sqrt((D02(i,j)+H2*H2)/(1+gamma1*(1-f(j)/f2)^2/gamma2));
     #    end
     gdf = f <= f2
-    for i in range(im): #=1:im
-        h[i,gdf]=np.sqrt((D02[i,gdf]+H2*H2)/(
-            1+gamma1*(1-f[gdf]/f2)**2/gamma2))
+    for j in np.where(gdf)[0]:
+        for i in range(im): #=1:im
+            h[i,j]=np.sqrt((D02[i,j]+H2*H2)/(
+                1+gamma1*(1-f[j]/f2)**2/gamma2))
     #
     # Pedlosky eqn 4.4.14a,b.
     #
     h1=np.zeros((im,jm))
-    for i in range(im): #=1:im
-        h1[i,gdf] = (1-f[gdf]/f2)*h[i,gdf]
-        h2[i,gdf] = f[gdf]*h[i,gdf]/f2
+    for j in np.where(gdf)[0]:
+        for i in range(im): #=1:im
+            h1[i,j] = (1-f[j]/f2)*h[i,j]
+            h2[i,j] = f[j]*h[i,j]/f2
     #
     # The shadow zone.
     # The latitude and longitude of the streamline that defines the
@@ -151,19 +153,24 @@ def two_layers(theta0=60.,theta2=50., rho1=1025.50,rho2=1026.75,
     #shadx=ones(jm,1)*phie*eradius/1000;
     #shady=zeros(jm,1);
     #for j=jm:-1:1
-    shady = np.arange(jm)*dtheta*eradius/1000
-    shadx = np.zeros_like(shady)
-    j = gdf
-    fac=1/(D0fact*np.sin(np.pi*f[j]/f0))
-    phi_shadow=phie*(1-fac*gamma1*(1-f[j]/f2)**2*H2*H2/gamma2)
-    shadx[j]=phi_shadow*eradius/1000
-    phi=np.arange(im)[gdf]*dphi
-    gdphi = phi >= phi_shadow
-    for j in np.where(gdf)[0]:
-        for i in np.where(gdphi)[0]:
-            h[i,j]=H2
-            h1[i,j]=np.sqrt(gamma2*D02[i,j]/gamma1)
-            h2[i,j]=h[i,j]-h1[i,j]
+    shadx = np.ones(jm)*phie*eradius/1000
+    shady = np.zeros_like(shadx)
+    gdj = np.where(gdf)[0]
+    phi=np.arange(im)*dphi
+    for j in range(jm-1,-1,-1):
+        shady[j]=j*dtheta*eradius/1000
+        if j in gdj:
+            fac=1/(D0fact*np.sin(np.pi*f[j]/f0))
+            phi_shadow=phie*(1-fac*gamma1*(1-f[j]/f2)**2*H2*H2/gamma2)
+            shadx[j]=phi_shadow*eradius/1000
+            #if j == 0:
+            #    import pdb; pdb.set_trace()
+            gdphi = phi >= phi_shadow
+            for i in np.where(gdphi)[0]:
+                h[i,j]=H2
+                h1[i,j]=np.sqrt(gamma2*D02[i,j]/gamma1)
+                h2[i,j]=h[i,j]-h1[i,j]
+    import pdb; pdb.set_trace()
     #
     # The western pool region.
     # The latitude and longitude of the streamline that defines the
@@ -181,33 +188,40 @@ def two_layers(theta0=60.,theta2=50., rho1=1025.50,rho2=1026.75,
     Gamma12=gamma1/gamma2
     hw=np.sqrt(D02w+H2*H2)
     pooly=np.arange(jm)*dtheta*eradius/1000
+    poolx= np.zeros_like(pooly)
 
     # Tricky one!
-    fac=1/(D0fact*np.sin(np.pi*f[gdf]/f0))
-    fac1=Gamma12*(1-f[gdf]/f2)**2
-    phi_pool=phie*(1-fac*(D02w*(1+fac1)+H2*H2*fac1))
-    poolx= np.maximum(phi_pool*eradius/1000, 0.)
-    phi= np.arange(im)[gdf]*dphi
-    gdphi = phi <= phi_pool
-    for j in np.where(gdf)[0]:
+    phi= np.arange(im)*dphi
+    for j in np.flip(np.where(gdf)[0]):
+        fac=1/(D0fact*np.sin(np.pi*f[j]/f0))
+        fac1=Gamma12*(1-f[j]/f2)**2
+        phi_pool=phie*(1-fac*(D02w*(1+fac1)+H2*H2*fac1))
+        poolx[j] = max(phi_pool*eradius/1000, 0.)
+        gdphi = phi <= phi_pool
         for i in np.where(gdphi)[0]:
             h[i,j]=Gamma12*f[j]*hw/(
                 f2*(1+Gamma12))+np.sqrt(
                     (D02[i,j]+H2*H2)*(
                         1+Gamma12)-Gamma12*(
                             f[j]*hw/f2)**2)/(1+Gamma12)
-            h1[i,j]=h[i,j]-f[j]*hw/f2
+            h1[i,j]= h[i,j] - f[j]*hw/f2
+            if (i == 10) and (j==10):
+                import pdb; pdb.set_trace()
     #
+    psi1=np.nan*np.ones((im,jm))
     psi2=np.nan*np.ones((im,jm))
 
     hp1=h1
     ps=shadx*1000/eradius
-    for i in range(im): #=1:im
-        hp1[i,gdf]=np.nan
-        psi2[i,gdf]=gamma2*h2[i,gdf]
+    gdf = f <= f2
+    for j in np.where(gdf)[0]:
+        for i in range(im): #=1:im
+            hp1[i,j]=np.nan
+            psi2[i,j]=gamma2*h2[i,j]
+            psi1[i,j]= gamma1*h1[i,j]+gamma2*(h1[i,j]+h2[i,j])
+    import pdb; pdb.set_trace()
 
     phi=np.arange(im)*dphi
-    psi1= gamma1*h1+gamma2*(h1+h2)
     gdphi = phi < ps
     for j in np.where(gdf)[0]:
         for i in np.where(gdphi)[0]:
@@ -217,7 +231,10 @@ def two_layers(theta0=60.,theta2=50., rho1=1025.50,rho2=1026.75,
     outy=np.ones(jm)*theta2*eradius/1000
     outx=np.arange(im)*dphi*eradius/1000
 
-    return xarr, yarr, psi2
+    ixt = int((xtrans/dx)+1)
+    iyt = int(((ytrans*2*np.pi/360)/dtheta)+1)
+
+    return xarr, yarr, shadx, shady, outx, outy, poolx, pooly, psi1, psi2, ixt, iyt, h, hp1
 
 # Command line execution
 if __name__ == '__main__':
