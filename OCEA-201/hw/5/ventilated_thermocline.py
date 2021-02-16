@@ -22,7 +22,7 @@ from IPython import embed
 #%%%%%%%%%%%%%%% DO NOT EDIT THE FILE BELOW HERE %%%%%%%%
 #%
 def two_layers(theta0=60.,theta2=50., rho1=1025.50,rho2=1026.75,
-               Lx=5000., W0=2e-6, H2=400, max_depth=-1200):
+               Lx=5e6, W0=2e-6, H2=400, max_depth=-1200):
     """[summary]
 
     Args:
@@ -30,7 +30,7 @@ def two_layers(theta0=60.,theta2=50., rho1=1025.50,rho2=1026.75,
         theta2 ([type], optional): [description]. Defaults to 50..
         rho1 (float, optional): [description]. Defaults to 1025.50.
         rho2 (float, optional): [description]. Defaults to 1026.75.
-        Lx ([type], optional): [description]. Defaults to 5000..
+        Lx (width of the box in m, optional): [description]. Defaults to 5e6.
         W0 ([type], optional): [description]. Defaults to 2e-6.
         H2 (int, optional): [description]. Defaults to 400.
         max_depth (int, optional): [description]. Defaults to -1200.
@@ -82,9 +82,10 @@ def two_layers(theta0=60.,theta2=50., rho1=1025.50,rho2=1026.75,
     yarr=np.zeros((jm,jm))
 
     for i in range(im): #=1:im
-        xarr[i,:]=(i-1)*dphi*eradius/1000
+        xarr[i,:]=i*dphi*eradius/1000
     for j in range(jm): #1:jm
-        yarr[i,j]=(j-1)*dtheta*eradius/1000
+        yarr[i,j]=j*dtheta*eradius/1000
+    #embed(header='88 of vt')
     #
     # Coriolis parameter.
     # 
@@ -170,7 +171,8 @@ def two_layers(theta0=60.,theta2=50., rho1=1025.50,rho2=1026.75,
                 h[i,j]=H2
                 h1[i,j]=np.sqrt(gamma2*D02[i,j]/gamma1)
                 h2[i,j]=h[i,j]-h1[i,j]
-    import pdb; pdb.set_trace()
+
+    #import pdb; pdb.set_trace()
     #
     # The western pool region.
     # The latitude and longitude of the streamline that defines the
@@ -205,13 +207,14 @@ def two_layers(theta0=60.,theta2=50., rho1=1025.50,rho2=1026.75,
                         1+Gamma12)-Gamma12*(
                             f[j]*hw/f2)**2)/(1+Gamma12)
             h1[i,j]= h[i,j] - f[j]*hw/f2
-            if (i == 10) and (j==10):
-                import pdb; pdb.set_trace()
+            #if (i == 10) and (j==10):
+            #    import pdb; pdb.set_trace()
+    #embed(header='211 of vt')
     #
     psi1=np.nan*np.ones((im,jm))
     psi2=np.nan*np.ones((im,jm))
 
-    hp1=h1
+    hp1=h1.copy()
     ps=shadx*1000/eradius
     gdf = f <= f2
     for j in np.where(gdf)[0]:
@@ -219,7 +222,7 @@ def two_layers(theta0=60.,theta2=50., rho1=1025.50,rho2=1026.75,
             hp1[i,j]=np.nan
             psi2[i,j]=gamma2*h2[i,j]
             psi1[i,j]= gamma1*h1[i,j]+gamma2*(h1[i,j]+h2[i,j])
-    import pdb; pdb.set_trace()
+    #import pdb; pdb.set_trace()
 
     phi=np.arange(im)*dphi
     gdphi = phi < ps
@@ -238,5 +241,5 @@ def two_layers(theta0=60.,theta2=50., rho1=1025.50,rho2=1026.75,
 
 # Command line execution
 if __name__ == '__main__':
-    two_layers()
+    xarr, yarr, shadx, shady, outx, outy, poolx, pooly, psi1, psi2, ixt, iyt, h, hp1 = two_layers()
     embed(header='225')
