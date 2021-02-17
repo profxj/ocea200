@@ -84,7 +84,7 @@ def two_layers(theta0=60.,theta2=50., rho1=1025.50,rho2=1026.75,
     for i in range(im): #=1:im
         xarr[i,:]=i*dphi*eradius/1000
     for j in range(jm): #1:jm
-        yarr[i,j]=j*dtheta*eradius/1000
+        yarr[:,j]=j*dtheta*eradius/1000
     #embed(header='88 of vt')
     #
     # Coriolis parameter.
@@ -216,19 +216,20 @@ def two_layers(theta0=60.,theta2=50., rho1=1025.50,rho2=1026.75,
 
     hp1=h1.copy()
     ps=shadx*1000/eradius
+    phi = np.arange(im)*dphi
     gdf = f <= f2
-    for j in np.where(gdf)[0]:
-        for i in range(im): #=1:im
-            hp1[i,j]=np.nan
-            psi2[i,j]=gamma2*h2[i,j]
-            psi1[i,j]= gamma1*h1[i,j]+gamma2*(h1[i,j]+h2[i,j])
+    for j in range(jm):
+        if f[j] > f2:
+            for i in range(im): #=1:im
+                hp1[i,j]=np.nan
+                psi2[i,j]=gamma2*h2[i,j]
+        else:
+            for i in range(im): #=1:im
+                psi1[i,j]= gamma1*h1[i,j]+gamma2*(h1[i,j]+h2[i,j])
+                if phi[i] < ps[j]:
+                    psi2[i,j]=gamma2*(h1[i,j]+h2[i,j])
     #import pdb; pdb.set_trace()
 
-    phi=np.arange(im)*dphi
-    gdphi = phi < ps
-    for j in np.where(gdf)[0]:
-        for i in np.where(gdphi)[0]:
-            psi2[i,j]=gamma2*(h1[i,j]+h2[i,j])
 
     # For plotting
     outy=np.ones(jm)*theta2*eradius/1000
