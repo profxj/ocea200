@@ -1,0 +1,70 @@
+
+Model Descriptions:
+
+The program called ex6_prob3.f solves the shallow
+water equations as they apply to the abyssal ocean
+on a middle-latitude beta-plane centred
+at PHI0. The model domain is 5000km by 5000km, which is
+about the size of the North Atlantic. The model grid spacing
+is 100km and a timestep of 1/16th of a day is used.
+
+Running the Model:
+
+Before running the model you will need to choose 
+appropriate parameters for the problem you wish
+to address. To do this you will need to edit the
+file called ex6_prob3.input. The various parameters
+that you need to choose are described below.
+
+
+TSTOP:  This is the length of time in years that you want
+        to run the model.
+
+PHI0:   The central latitude (in degrees) of the basin.
+        PHI0 > 0 in the northern hemisphere.
+        PHI0 < 0 in the southern hemisphere.
+
+IPLTM:  An integer flag to control the frequency that data is plotted.
+        Data is plotted every IPLTM months. So IPLTM=6 plots data
+        every 6 months.
+        You may want to experiment with this parameter as it
+        is very easy to end up with huge output files.
+        With IPLTM=5, a 50 year run of the model creates an
+        output file that is about 5Mb big.
+
+A_H:    The coefficient of horizontal eddy viscosity.
+
+Once you have prepared the input file ex6_prob3.input
+you are ready to compile and run the model.
+
+To compile the model type:
+
+  make -f make.ex6 prob3
+
+This will create an executable file called prob3.x
+
+To run the model simply type:
+
+./prob3.x 
+
+
+When the model has run, the file prob3.ps is a postscript
+file that contains contour and vector plots of the model fields.
+This file can be printed on a postscript printer,
+and viewed on the screen using a utility such as 
+ghostscript or gv.
+
+***Each time that you run the model the file prob3.ps
+   will be overwritten so you will need to rename it each
+   time if you want to keep it.
+
+Each time you changes the input parameters in the file
+ex6_prob3.input it is not necessary to recompile the model
+before you run it again.
+
+Happy computing!
+
+PS If you have any problems running the model please let
+me (Andy) know asap.
+
+
