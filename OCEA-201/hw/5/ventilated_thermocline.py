@@ -560,6 +560,8 @@ def three_layers(rho1=0, rho2=0, rho3=0, theta0=0,
                 psi2[i,j]=(gamma2*(h1[i,j]+h2[i,j])+gamma3*(h1[i,j]+h2[i,j]+h3[i,j]))
                 if phi[i] <= ps[j]:
                     psi3[i,j]=gamma3*(h1[i,j]+h2[i,j]+h3[i,j])
+            if j == 50:
+                embed(header='561 of vt')
 
 
     outy2=np.ones(jm)*theta2*eradius/1000
