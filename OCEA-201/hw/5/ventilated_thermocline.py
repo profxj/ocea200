@@ -427,7 +427,7 @@ def three_layers(rho1=0, rho2=0, rho3=0, theta0=0,
         fac4=(1-f[j]/f3-f[j]*fac2*(1+Gamma23*fac3)/(f2*(1+Gamma23*fac2)))
         fac5=fac4*fac4
         F=1+Gamma23*fac3*fac3+Gamma13*fac5
-        h[:,j]=np.sqrt((D02[i,j]+H3*H3)/F)
+        h[:,j]=np.sqrt((D02[:,j]+H3*H3)/F)
         h3[:,j]=f[j]*h[:,j]/f3
         h2[:,j]=f[j]*h[:,j]*fac2*(1+Gamma23*fac3)/(f2*(1+Gamma23*fac2))
         h1[:,j]=h[:,j]-h2[:,j]-h3[:,j]
@@ -457,6 +457,7 @@ def three_layers(rho1=0, rho2=0, rho3=0, theta0=0,
         for i in np.where(gdphi)[0]:
             h[i,j]=H3
 #    %AMM        h2(i,j)=sqrt(gamma3*D02(i,j)/gamma2);
+    #embed(header='460 of vt')
 
     #%
     #% The boundary between region M and R in Pedlosky Fig 4.7.2.
@@ -502,6 +503,8 @@ def three_layers(rho1=0, rho2=0, rho3=0, theta0=0,
                 h2[i,j]=b*(H3+gamma2*hhat/gamma3)
                 h1[i,j]=hhat-h2[i,j]
                 h3[i,j]=h[i,j]-h1[i,j]-h2[i,j]
+            #if j == 50:
+            #    embed(header='507 of vt')
 
     #%
     #%
@@ -539,7 +542,7 @@ def three_layers(rho1=0, rho2=0, rho3=0, theta0=0,
     ps=shadx*1000/eradius
 
     hp1=h1.copy()
-    hp2=h1+h2
+    hp2=(h1+h2).copy()
     phi = np.arange(im)*dphi
     for j in range(jm):
         if f[j] > f3:
@@ -560,8 +563,8 @@ def three_layers(rho1=0, rho2=0, rho3=0, theta0=0,
                 psi2[i,j]=(gamma2*(h1[i,j]+h2[i,j])+gamma3*(h1[i,j]+h2[i,j]+h3[i,j]))
                 if phi[i] <= ps[j]:
                     psi3[i,j]=gamma3*(h1[i,j]+h2[i,j]+h3[i,j])
-            if j == 50:
-                embed(header='561 of vt')
+            #if j == 50:
+            #    embed(header='561 of vt')
 
 
     outy2=np.ones(jm)*theta2*eradius/1000
@@ -771,4 +774,4 @@ if __name__ == '__main__':
     #             H3=0, max_depth=-1200)
     (xarr, yarr, shadx, shady, outx2, outy2, outx3, outy3, poolx, pooly, 
             psi1, psi2, psi3, ixt, iyt, h, hp1, hp2, RMx, RMy) = three_layers(**NA_dict)
-    embed(header='225')
+    embed(header='777')
