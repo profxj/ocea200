@@ -477,32 +477,31 @@ def three_layers(rho1=0, rho2=0, rho3=0, theta0=0,
     for j in range(jm-1,-1,-1):
         if f[j] <= f2:
             RMy[j]=j*dtheta*eradius/1000
-            fac=1/(D0fact*np.sin(np.pi*f[j]/f0))
-            phi_RM=phie*(1-fac*D02S*(1+Gamma12*(1-f[j]/f2)**2))
-            RMx[j]=phi_RM*eradius/1000
     # Solution in region R.
-            gdphi = phi >= phi_RM
-            for i in np.where(gdphi)[0]:
-                hhat=np.sqrt(D02[i,j]/(Gamma23*(1+Gamma12*(1-f[j]/f2)**2)))
-                h2[i,j]=f[j]*hhat/f2
-                h1[i,j]=hhat-h2[i,j]
-                h3[i,j]=h[i,j]-h1[i,j]-h2[i,j]
+            for i in range(im):
+                fac=1/(D0fact*np.sin(np.pi*f[j]/f0))
+                phi_RM=phie*(1-fac*D02S*(1+Gamma12*(1-f[j]/f2)**2))
+                RMx[j]=phi_RM*eradius/1000
+                if phi[i] >= phi_RM:  
+                    hhat=np.sqrt(D02[i,j]/(Gamma23*(1+Gamma12*(1-f[j]/f2)**2)))
+                    h2[i,j]=f[j]*hhat/f2
+                    h1[i,j]=hhat-h2[i,j]
+                    h3[i,j]=h[i,j]-h1[i,j]-h2[i,j]
     # Solution in region M - solution of a quadratic for (h1+h2).
-            phis=shadx[j]*1000/eradius
-            gdphi = (phi >= phis) & (phi < phi_RM)
-            for i in np.where(gdphi)[0]:
-                a=gamma3*D02[i,j]/gamma1
-                b=f[j]*fac2/(f2*(1+Gamma23*fac2))
-                c1=(b*Gamma23-1)**2+gamma2/gamma1
-                c2=2*b*H3*(b*Gamma23-1)
-                c3=b*b*H3*H3-a
-                hhat1=(-c2+np.sqrt(c2*c2-4*c1*c3))/(2*c1)
-                hhat2=(-c2-np.sqrt(c2*c2-4*c1*c3))/(2*c1)
-                hhat=hhat1
-        #%        hhat=hhat2;
-                h2[i,j]=b*(H3+gamma2*hhat/gamma3)
-                h1[i,j]=hhat-h2[i,j]
-                h3[i,j]=h[i,j]-h1[i,j]-h2[i,j]
+                phis=shadx[j]*1000/eradius
+                if (phi[i] >= phis) & (phi[i] < phi_RM):
+                    a=gamma3*D02[i,j]/gamma1
+                    b=f[j]*fac2/(f2*(1+Gamma23*fac2))
+                    c1=(b*Gamma23-1)**2+gamma2/gamma1
+                    c2=2*b*H3*(b*Gamma23-1)
+                    c3=b*b*H3*H3-a
+                    hhat1=(-c2+np.sqrt(c2*c2-4*c1*c3))/(2*c1)
+                    hhat2=(-c2-np.sqrt(c2*c2-4*c1*c3))/(2*c1)
+                    hhat=hhat1
+            #%        hhat=hhat2;
+                    h2[i,j]=b*(H3+gamma2*hhat/gamma3)
+                    h1[i,j]=hhat-h2[i,j]
+                    h3[i,j]=h[i,j]-h1[i,j]-h2[i,j]
             #if j == 50:
             #    embed(header='507 of vt')
 
