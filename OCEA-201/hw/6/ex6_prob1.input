@@ -1,4 +1,4 @@
-80                             TSTOP (years)
-50.                             PHI0 (degrees - < 0 for SH)
+50                             TSTOP (years)
+60.                             PHI0 (degrees - < 0 for SH)
 6                              IPLTM (months)
-2e5                            Ah coeff of eddy vicosity (m*m/s)
+2e4                            Ah coeff of eddy vicosity (m*m/s)
