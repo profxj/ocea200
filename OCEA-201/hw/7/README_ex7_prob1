@@ -1,0 +1,21 @@
+
+To compile the executable for question 1, type the following:
+
+   make -f make.ex7 prob1
+
+Before running the model you need to edit the input file prob1.input.
+
+To run the model type:
+
+  ./prob1.x
+
+To plot the model output type the following:
+
+  make -f make.ex7 plot1
+  ./plot1.x
+
+This is will create a postscript file called prob1.ps
+which you can view using "gs" or "gv" or Adobe Acrobat Reader.
+
+Each time you plot the new  model output, you need to rename the file prob1.ps
+otherwise you will get an error.

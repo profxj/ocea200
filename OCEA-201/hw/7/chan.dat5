@@ -1,0 +1,22 @@
+1.0                      SIGS
+1.0                      SIGV
+0                        ITOL 0/1  NO/YES
+2                        NUMI
+10.                      TOLER
+1.                       STEPI
+1                        ICG 0/1   F-R/P-R SCHEME
+1                        ISEM 1/2 C-G/S-C-G
+1                        IDIS 0/1  NO/YES
+5                        NSK
+0                        ITEST 0/1 NO/YES
+0.2                      CTOL   0.-1.
+0.                       TADJ0 (DAYS)
+8 1 1                    ADJOINT FILTER: IADN,IADF,IADC
+50                        maxprs
+50                        lanmax
+1.0                      condm
+-1.e-29                  endl
+1.                       endr
+15                        iev
+0.1                      kappa
+-1                        msglvl
