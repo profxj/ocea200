@@ -20,13 +20,13 @@
       REAL               TARRAY( 2 )
 *     ..
 *     .. External Functions ..
-      REAL               ETIME
-      EXTERNAL           ETIME
+!AMM      REAL               ETIME
+!AMM      EXTERNAL           ETIME
 *     ..
 *     .. Executable Statements ..
 *
 
-      T1 = ETIME( TARRAY )
+!AMM      T1 = ETIME( TARRAY )
       T  = TARRAY( 1 )
 
       RETURN
